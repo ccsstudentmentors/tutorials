@@ -1,0 +1,7 @@
+At this point, you may be confused about how to take files from your pc or a hard drive and load them onto the computing cluster that you are supposed to use to process the data.
+
+If you are using the University of Miami Pegasus computing cluster, our Center for Computational Sciences has already written a much better guide on this topic than I could ever write: http://ccs.miami.edu/hpc/?page_id=6568
+See also their excellent guides on the basic usage of Pegasus.
+If you still need an account for using Pegasus, request one here: http://iweb.ccs.miami.edu:8080/account/newaccount.htm
+
+For users of any other computing system, the explanation of how to use an FTP client in the referenced guide is still applicable to you, but you will need to figure out your host address and some of the other specifics on your own.
