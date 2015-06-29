@@ -1,0 +1,8 @@
+So, you've gotten your fastq files (files containing millions of reads for each sample) onto your chosen computing server. The next step is to align them to the correct genome. 
+
+Lots of different next-generation sequencing applications require aligning the produced reads to the genome, but RNA-Seq adds an additional confound. Since the reads are coming from processed RNA, if a read overlaps a splice junction, it will not align properly to the genome (because the genome will have an intron between where the read starts and ends). To deal with this, RNA-Seq reads must be aligned to the genome with a 'splice-aware aligner'. 
+
+There are numerous splice-aware aligners available for use. The two most common are Tophat2 and STAR. Both are installed on Pegasus (and can be loaded as modules) if you wish to use them. As far as I know, Tophat2 is still the more commonly used tool, but STAR is quickly gaining popularity because it is much faster while being just as accurate. There are plenty of papers comparing the two, but one that I think does a particularly excellent job (and also compares many other RNA-Seq related tools) is: http://www.ncbi.nlm.nih.gov/pubmed/25271838 
+
+Whichever tool you choose to use is up to you. The paper above can help you make an informed decision. I hope to eventually post a tutorial on using STAR, but for now I only have a tutorial on using Tophat2.
+
