@@ -1,0 +1,70 @@
+# Intro
+
+Tophat was built on top of the non-splice-aware aligner Bowtie. So in order to use Tophat, you must also have bowtie available. Tophat and bowtie are both available as modules on pegasus to simply load and use. 
+
+But if you want the most up-to-date version of either piece of software, you can also install your own copy. The admins at CCS do a pretty good job keeping the list of available programs up to date with new versions though, so there is not much reason to install your own (unless you need to use the same versions of all pieces of software as a collaborator or something like that). If you choose to install your own version, see the file title 'manual installation of tophat'. The rest of this tutorial will operate under the assumption that you are using the built-in tophat and bowtie modules though.
+
+# Setup
+To load tophat and bowtie for use on pegasus, simply type the following commands:
+module load bowtie2/2.2.2
+module load tophat/2.0.11
+These versions were the most recent available as pegasus modules at the time of writing this guide (June 29th, 2015). When new ones become available, simply use those version numbers instead. To see a complete list of all available modules, type:
+module avail
+
+Now, to confirm that the modules have been loaded properly, type:
+which tophat
+which should return:
+/share/apps/tophat/2.0.11/tophat
+
+similarly for bowtie2:
+which bowtie2
+returns:
+/share/opt/bowtie2/2.2.2/bowtie2
+
+Great, now that the software is loaded, we need to give it information about the genome to which we want to align our data. This involves two steps:
+First, we need to download the genome sequence as a fasta file
+Second, we need to download (or construct) an indexed version of the genome for bowtie2 to work with
+Third, we need to download an annotation file containing all the known genes and transcripts for this genome. This third step is technically optional, but it helps to improve the accuracy of splice junction calling and is generally recommended. We are also going to need this file when we quantify the transcripts present, so might as well use it now too. 
+
+Before we get started downloading these files, there is an important caveat to discuss. There are two major 'versions' of most genomes. One is the NCBI version, the other is the Ensembl version. They are essentially the same set of As,Ts,Cs and Gs but the NCBI version starts counting the nucleotides on each chromosome from 0, while Ensembl starts counting from 1. So, it doesn't matter which version you use, but we need to be consistent and get all three of the above file sets from the same source. 
+
+For this guide, I am going to arbitrarily choose to use Ensembl. At the time of writing, the most recent genome annotation was GRC38. So that is what we will use for each model system:
+
+Genome sequence file:
+Human: ftp://ftp.ensembl.org/pub/release-80/fasta/homo_sapiens/dna/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+Mouse: ftp://ftp.ensembl.org/pub/release-80/fasta/mus_musculus/dna/Mus_musculus.GRCm38.dna.primary_assembly.fa.gz
+  I would recommend loading this Genome Sequence file onto Pegasus and putting it in the following location
+  ~/RNASeq/GRCh38
+  or 
+  ~/RNASeq/GRCm38
+Find other species here: ftp://ftp.ensembl.org/pub/release-80/fasta/
+  When selecting which genome assembly file to download (for other species), select the primary_assembly instead of the top-level (if such a distinction is available for the species). The top level contains information about additional haplotypes that will not be useful in RNA-Seq analysis. You should also select the file that is called .dna. or .dna_sm. rather than .dna_rm. These phrases refer to the masking of the genome. .dna. is unmasked, .dna_sm. is 'soft-masked' by making repeat regions be lowercase nucleotides (makes no difference to any aligners that I know of). The .dna_rm. files have repeat regions converted to Ns. This will cause issues with RNA-Seq analysis by artificially removing part of your signal (not to mention that masking is far from perfect anyway). 
+
+Genome index file:
+Pre-built indexes for Bowtie2 can be found on its home page: http://bowtie-bio.sourceforge.net/bowtie2/index.shtml
+However, it does not have options for the newest version of the Ensembl version of the genome yet for mice or humans, so we will just have to build this index ourselves (which users of other species will probably have to do anyway).
+Bowtie2 has a command to build this index out of the genome sequence file. 
+Navigate to the folder containing your genome sequence file. Let's say it is at 
+~/RNASeq/GRCh38/Homo_sapiens.GRCh38.dna.primary_assembly.fa.gz
+Then change to that directory:
+cd ~/RNASeq/GRCh38
+rename the fasta file to something a bit easier to deal with:
+mv Home_sapiens.GRCh38.dna.primary_assembly.fa.gz GRCh38.fa.gz
+Unzip it:
+gunzip GRCh38.fa.gz
+then enter this command:
+bowtie2-build -f GRCh38.fa GRCh38
+This will create a series of files called GRCh38.1.bt2, GRCh38.rev.1.bt2, GRCh38.2.bt2, etc
+
+Genome annotation:
+Human: ftp://ftp.ensembl.org/pub/release-80/gtf/homo_sapiens/Homo_sapiens.GRCh38.80.gtf.gz
+Mouse: ftp://ftp.ensembl.org/pub/release-80/gtf/mus_musculus/Mus_musculus.GRCm38.80.gtf.gz
+Find other species here: ftp://ftp.ensembl.org/pub/release-80/gtf/
+  Place and unzip this annotation file in the same folder as the genome sequence
+
+Now we are ready to actually run Tophat!
+
+# Running Tophat
+I have provided several example job files for submitting a Tophat job (for a human sample). I think seeing these examples does the best job of explaining how the different pieces of the command work together.
+Here is a quick description of the command parameters that I will be using (feel free to read through the official explanations of all the paramters here: http://ccb.jhu.edu/software/tophat/manual.shtml):
+
