@@ -2,7 +2,7 @@
 
 Tophat was built on top of the non-splice-aware aligner Bowtie. So in order to use Tophat, you must also have bowtie available. Tophat and bowtie are both available as modules on pegasus to simply load and use. 
 
-But if you want the most up-to-date version of either piece of software, you can also install your own copy. The admins at CCS do a pretty good job keeping the list of available programs up to date with new versions though, so there is not much reason to install your own (unless you need to use the same versions of all pieces of software as a collaborator or something like that). If you choose to install your own version, see the file title 'manual installation of tophat'. The rest of this tutorial will operate under the assumption that you are using the built-in tophat and bowtie modules though.
+But if you want the most up-to-date version of either piece of software, you can also install your own copy. The admins at CCS do a pretty good job keeping the list of available programs up to date with new versions though, so there is not much reason to install your own (unless you need to use the same versions of all pieces of software as a collaborator or something like that). If you choose to install your own version, see the file titled 'manual installation of tophat'. The rest of this tutorial will operate under the assumption that you are using the built-in tophat and bowtie modules though.
 
 # Setup
 To load tophat and bowtie for use on pegasus, simply type the following commands:
@@ -21,7 +21,7 @@ which bowtie2
 returns:
 /share/opt/bowtie2/2.2.2/bowtie2
 
-Great, now that the software is loaded, we need to give it information about the genome to which we want to align our data. This involves two steps:
+Great, now that the software is loaded, we need to give it information about the genome to which we want to align our data. This involves three steps:
 First, we need to download the genome sequence as a fasta file
 Second, we need to download (or construct) an indexed version of the genome for bowtie2 to work with
 Third, we need to download an annotation file containing all the known genes and transcripts for this genome. This third step is technically optional, but it helps to improve the accuracy of splice junction calling and is generally recommended. We are also going to need this file when we quantify the transcripts present, so might as well use it now too. 
