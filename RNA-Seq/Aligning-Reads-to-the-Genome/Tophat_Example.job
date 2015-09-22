@@ -1,7 +1,4 @@
 #!/bin/bash
-
-PATH=$PATH:~/RNA-Seq/bowtie2-2.2.3/
-
 #BSUB -J Tophat_Sample1
 #BSUB -o Tophat_Sample1.out
 #BSUB -e Tophat_Sample1.err
