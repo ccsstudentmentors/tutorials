@@ -7,14 +7,14 @@
 #BSUB -n 4
 
 # For aligning a sample with a single fastq file with single-ended reads
-~/RNA-Seq/tophat-2.0.12.Linux_x86_64/tophat -i50 -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.R1.fastq
+tophat -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.R1.fastq
 
 # For aligning a sample with a pair of fastq files with paired-ended reads
-~/RNA-Seq/tophat-2.0.12.Linux_x86_64/tophat -i50 -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.R1.fastq ../FastQFiles/Sample1.R2.fastq
+tophat -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.R1.fastq ../FastQFiles/Sample1.R2.fastq
 
 # For aligning a sample with a three fastq files with single-ended reads
-~/RNA-Seq/tophat-2.0.12.Linux_x86_64/tophat -i50 -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.Lane1.R1.fastq,../FastQFiles/Sample1.Lane2.R1.fastq,../FastQFiles/Sample1.Lane3.R1.fastq
+tophat -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.Lane1.R1.fastq,../FastQFiles/Sample1.Lane2.R1.fastq,../FastQFiles/Sample1.Lane3.R1.fastq
 
 # For aligning a sample with a six fastq files with paired-ended reads
-~/RNA-Seq/tophat-2.0.12.Linux_x86_64/tophat -i50 -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.Lane1.R1.fastq,../FastQFiles/Sample1.Lane2.R1.fastq,../FastQFiles/Sample1.Lane3.R1.fastq ../FastQFiles/Sample1.Lane1.R2.fastq,../FastQFiles/Sample1.Lane2.R2.fastq,../FastQFiles/Sample1.Lane3.R2.fastq 
+tophat -G ~/RNA-Seq/hg38/hg38.gtf -p4 -o . ~/RNA-Seq/hg38/hg38 ../FastQFiles/Sample1.Lane1.R1.fastq,../FastQFiles/Sample1.Lane2.R1.fastq,../FastQFiles/Sample1.Lane3.R1.fastq ../FastQFiles/Sample1.Lane1.R2.fastq,../FastQFiles/Sample1.Lane2.R2.fastq,../FastQFiles/Sample1.Lane3.R2.fastq 
 
