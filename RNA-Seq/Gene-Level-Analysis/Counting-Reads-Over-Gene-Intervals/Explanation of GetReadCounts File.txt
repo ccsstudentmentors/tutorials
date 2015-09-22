@@ -1,0 +1,22 @@
+The first seven lines of the job file are the standard job file header, updated so the naming matches this application
+
+There are two examples of how to run the HTSeq-count script here. Essentially the only difference is whether you want to deal with the genes using their Ensembl gene IDs or their official gene symbols. 
+Either way is fine and will work for either EdgeR or DESeq. However, I recommend sticking with the geneIDs for now and then converting over to the gene names later (which we will cover). I recommend this for two reasons:
+First, the gene names can sometimes be ambiguous whereas the gene IDs never are. We want to limit the number of steps with any ambiguiuty in them.
+Second, using the geneIDs allows us to more easily import this data into DESeq2 (it should theoretically also work for the gene names, but I have never gotten it to work properly that way). 
+
+So, the first thing we do in both of these examples is to state that we want to execute the htseq-count python script by giving its absolute location to the computer. 
+After that, we use the -f parameter to tell it what format our input data is in, which is bam format.
+Then, we use the -r parameter to tell it how our reads were sorted (you can choose between 'name' as shown here or 'pos' if you sorted by positon). If you did sort by position and have paired ended reads, I recommend running this job on the 'bigmem' queue to ensure you don't run out of memory. Otherwise, just stick with the 'general' queue as we are in the example.
+Next, we use the -i parameter to tell the script what name to use to group exons together. This essentially boils down to picking between using exons that belong to a particular 'gene_id' or exons that belong to a particular 'gene_name'. So select one of those options. 
+Then, we tell the script where to find our sorted input bam file.
+Finally, we tell the script where to put our output. We use the '>' symbol to funnel the output into this specified file. Otherwise, it would have spat the output out to the console. 
+
+Select which way you want to run this script, and submit it to the cluster with this command:
+bsub < GetReadCounts_Example.job
+
+As always, you can create a separate job file for each sample to ensure things proceed as quickly as possible (each one should complete in about 1-2 hours that way) or just submit all of the tasks as a single job that will perform the read counting in serial (should complete in 1-2 hours per sample). 
+
+When it is done, you will see your output file in the specified location. It will be a text file with two columns and many thousands of rows. The first column will be the gene name or gene ID. The second column will be the count of reads for that gene found in this sample. 
+
+Congratulations! You are done running jobs on Pegasus! Use your FTP program (FileZilla, most likely) and download these gene count files to your personal computer. 
