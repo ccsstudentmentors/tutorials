@@ -32,7 +32,7 @@ Now that you have the subset of your data that have FDR-adjusted p-values of les
 Line #22 loads the conversion table file we made earlier into memory. This file has two columns -- the first is the Gene ID, the second is the corresponding gene name (the official gene symbol)
 Line #23 renames the column of data related to the gene names (so that it will be labeled as gene names when it is eventually printed out to file).
 Line #24 merges this conversion table with our results table using the gene IDs as the matching key. Because of the order in which we entered these two tables to the 'merge' command, we will get the Gene IDs put as the second column of the now eight column results files.
-
+Line #25 does the same thing as line 24 but only for the significantly differentially expressed genes. 
 
 Line #28 moves us to the directory called 'DESeq2Output'
 Line #29 prints a tab separated text file in that directory containing the information produced by DESeq2 about this comparison for every gene 
