@@ -16,3 +16,8 @@ I wrote this file to sort the bam files from each sample one after another. You 
 
 Once again, submit this job to the cluster with the following command
 bsub < BamSort_Example.job
+
+While the job is running, you will see lots of little bam files appear in the folder where your input is. Those are just intermediate files used to help the sorting process. They will get cleaned up by the end. 
+Once the job has finished running. You should see the output file that you specified.
+
+Now you are ready to proceed to counting reads that aligned to each gene -- head to that folder now!
