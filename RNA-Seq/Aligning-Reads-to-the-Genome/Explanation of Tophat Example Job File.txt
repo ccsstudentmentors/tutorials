@@ -1,0 +1,73 @@
+This file walks through the Tophat_Example.job file line by line and attempts to explain what everything means.
+
+Line #1: this command is the first thing you need to write in all of your job files. It specifies which scripting language the file uses. 
+In this case (and in all cases in this tutorial), we are using the language bash.
+
+Lines 2-7 are us telling the computing cluster a few basic things about what we want it to do. For a complete list of the parameters that can be specified here, see this page: http://ccs.miami.edu/hpc/?page_id=5308 
+Line #2: the #BSUB means we are telling the pegasus cluster something. That something is specified by which parameter we choose. In this line, we use the -J parameter to specify a name for this job.
+Line #3: The -o parameter allows us to name the standard output file that will be created by this job's execution. 
+Most jobs will create a standard output and a standard error file filled with information about the job's run/execution (the output file) or any errors that it ran into (the error file). 
+In most cases (I don't know of any exceptions), these files are distinct from the result files created by the execution of the specific job.
+Line #4: The -e parameter allows us to name the standard error file that I referred to before. 
+Line #5: The -W parameter allows us to specify the time limit for how long to allow the job to run. The time is specified as HH:MM (two digits of hours separated by a colon, then two digits of minutes)
+Line #6: The -q parameter allows us to choose which of Pegasus' predefined queues to use for this job. Each queue serves a different purpose and has different types of computers available. But in most cases, you will just use the 'general' queue. See this page for more information: http://ccs.miami.edu/hpc/?page_id=6271
+Line #7: The -n parameter allows us to request a particular number of processors for this job
+
+Lines 10, 13, 16, and 19 each provide an example of a Tophat command to align one or more fastq files belonging to a single sample to the genome. 
+
+Before I go in to the differences between these lines, lets go through the parameters that I use in all of them to specify details of how tophat will run.
+The complete list of these parameters and their official descriptions are located here: http://ccb.jhu.edu/software/tophat/manual.shtml
+
+First, we call the executable file 'tophat'. The computer knows where this executable file is because we loaded the tophat module earlier (see the file 'Preparing to Use Tophat.txt').
+Next, we specify two optional parameters. You don't have to set/use these parameters if you don't want to.
+The first is the -G parameter which allows us to specify a genomic annotation to use. Tophat does not technically need this information. It can generate compute a transcriptome de novo, but giving it this genomic annotation provides a nice starting point to guide its efforts. 
+The second optional parameter is -o which allows us to set the name of the directory where the output will be placed. I like to set this to the current directory (whichever directory you are in when you submit the job file) by setting the value to '.' (which basically means 'here'). 
+Setting this -o parameter this way is more of a personal preference than anything else. 
+
+Now on to the required parameters! 
+The optional parameters were all denoted by a dash (-) because you can choose to set any or none of them, but the required parameters do not get named in that way. 
+Tophat just expects you to put them where they need to be and in the correct order.
+The first required parameter that tophat expects is the 'base name' of the genome sequence/index data.
+Remember back in the 'Preparing to Use Tophat.txt' file when we made those files called GRCh38.fa, GRCh38.1.bt2, GRCh38.rev.1.bt2, etc (or similarly with GRCm38 for mouse)? Well this parameter wants us to specify the name leading up to that first decimal.
+So, we tell tophat which folder we put all of those files in. And then end with 'GRCh38' (or 'GRCm38' for mouse). Tophat knows that the files are going to have the extensions '.fa', '.1.bt2', etc. So, we are providing it with all the information it needs to find that whole set of files.
+
+After specifying the name and location of the genomic sequence and index files, all tophat still needs to know is where the fastq files are for this sample.
+
+If you just have one fastq file for your sample, then this is easy! The first example (line #10) shows that you just enter the name of that file and its location and you are done!
+Unfortunately, most RNA-Seq projects these days get a bit more complicated than that. 
+
+If your sample was generated with paired-ended reads, then you will have (at least) two fastq files for each sample. I would guess (based on no evidence) that this is the most common situation. 
+To enter your paired-ended fastq files properly to tophat, you need to give it the name of the 'left ended' read file and then the name of the 'right ended' read file separated by a space. The example of this situation is shown on line #13.
+Do not separate these two files with a comma -- that tells tophat that they are two sets of single-ended reads, rather than the paired ends of the same reads.
+
+Many times, you will get multiple sets of fastq files for each sample. This is usually a result of running a single sample out on several lanes of the HiSeq machine simultaneously. 
+To tell tophat to align several single-ended fastq files as a single sample, follow the example shown on line #16 and input the files as a comma-separated list.
+
+Finally, if your sample was run across multiple lanes and paired-ended sequencing was performed, follow the example shown on line #19. 
+Essentially, you need to give a comma-separated list of your 'left-ended' reads followed by a comma-separated list of your 'right-ended' reads where the two lists are separated by a space.
+It is very important to input the sets of read pairs in the same order in each of the two lists. If you don't tophat will throw an error. 
+
+Alright, that is all the information in the Tophat_example.job file! Once you have editied the job for your sample, submit it to the cluster with the following command:
+bsub < Tophat_Example.job 
+
+You can check on the status of any jobs submitted in this manner by using this command:
+bjobs
+
+You should expect your tophat alignment to take several hours. I usually just let it run overnight. 
+Make sure to take advantage of the fact that Pegasus can run many jobs at once and submit jobs for aligning each of your samples so it all gets done in a sinlge night.
+
+A successful run of tophat will return the following files (as well as many other, basically useless files):
+accepted_hits.bam 
+junctions.bed
+insertions.bed
+deletions.bed
+
+The 'accepted_hits.bam' file will be our input for our future work. It is an aligned read file, which basically has all of the information found in the fastq file plus where each read aligned in the genome.
+It is compressed in binary format though, so if you want to view it you will need to use the 'samtools view' command.
+To do that, you will need to load samtools:
+module load samtools
+And then run the command:
+samtools view accepted_hits.bam | head -100
+The [pipe] head -100 is not necessary, but otherwise the command will spit out tens of millions of lines of information to your screen. And nobody really wants that. This addition only shows the first 100 lines of the file.
+
+Anyway, you now need to choose how you want to analyze the rest of your data. The easiest way to make this decision is to choose whether you want to look at gene-level information or isoform-level information and then head to those corresponding tutorials!
