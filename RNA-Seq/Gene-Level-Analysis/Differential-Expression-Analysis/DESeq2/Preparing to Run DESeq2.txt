@@ -16,4 +16,4 @@ If you are asked to update all, some, or none of the dependent packages, type 'a
 Step 7: Load DESeq2
 library(DESeq2)
 
-Proceed to the simple DESeq2 data analysis script (and its corresponding explanation file). That script covers data analyses where you have three replicates of a control condition and three replicates of an experimental condition. The multi-variate DESeq2 analysis and multi-factor DESEQ2 analysis scripts handle more advanced/complicated setups. 
+Proceed to the simple DESeq2 data analysis script (and its corresponding explanation file). That script covers data analyses where you have three replicates of a control condition and three replicates of an experimental condition. The multi-variate DESeq2 analysis script handles more advanced/complicated setups. 
