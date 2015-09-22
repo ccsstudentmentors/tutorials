@@ -20,3 +20,5 @@ As always, you can create a separate job file for each sample to ensure things p
 When it is done, you will see your output file in the specified location. It will be a text file with two columns and many thousands of rows. The first column will be the gene name or gene ID. The second column will be the count of reads for that gene found in this sample. 
 
 Congratulations! You are done running jobs on Pegasus! Use your FTP program (FileZilla, most likely) and download these gene count files to your personal computer. 
+
+To continue following this tutorial, head to the folder titled 'Differential-Expression-Analysis'. 
