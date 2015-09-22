@@ -1,0 +1,13 @@
+#!/bin/bash
+#BSUB -J getReadCounts
+#BSUB -o getReadCounts.out
+#BSUB -e getReadCounts.err
+#BSUB -W 80:00
+#BSUB -q general
+#BSUB -n 1
+
+# To count based on Ensemble Gene IDs (ex. ENSG00000001) 
+/share/opt/python/2.7.3/bin/htseq-count -f bam -r name -i gene_id Sample1/Sample1_accepted_hits.nameSorted.bam ~/RNASeq/GRCh38/GRCh38.gtf > ReadCounts/Sample1.geneIDCounts.txt
+
+# To count based on the official gene symbols (ex. MAPK1) 
+/share/opt/python/2.7.3/bin/htseq-count -f bam -r name -i gene_name Sample1/Sample1_accepted_hits.nameSorted.bam ~/RNASeq/GRCh38/GRCh38.gtf > ReadCounts/Sample1.geneNameCounts.txt
