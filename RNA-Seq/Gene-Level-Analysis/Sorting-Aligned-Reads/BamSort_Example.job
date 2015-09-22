@@ -1,0 +1,6 @@
+#!/bin/bash
+
+other header info
+
+samtools sort -n ./Sample1/accepted_hits.bam ./Sample1/Sample1_accepted_hits.nameSorted
+samtools sort -n ./Sample2/accepted_hits.bam ./Sample2/Sample2_accepted_hits.nameSorted
