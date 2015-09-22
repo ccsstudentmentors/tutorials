@@ -19,6 +19,18 @@ As always, you can create a separate job file for each sample to ensure things p
 
 When it is done, you will see your output file in the specified location. It will be a text file with two columns and many thousands of rows. The first column will be the gene name or gene ID. The second column will be the count of reads for that gene found in this sample. 
 
-Congratulations! You are done running jobs on Pegasus! Use your FTP program (FileZilla, most likely) and download these gene count files to your personal computer. 
+If you used geneIDs for your naming scheme in HTSeq-count, you are eventually going to want to convert those geneIDs back into official gene symbols. So, we are going to prepare a file with the relevant information to make that possible using our genome annotation gtf file.
+First, head to the directory with the gtf file:
+cd ~/RNASeq/GRCh38/
+This next step is easy to do, but might be tricky to standardize for all future cases. So, all I can say is that these lines of code work for standard Ensembl GTF files as they are at the time of this writing. Basically, we need to pull out the information in the 'gene_id' and 'gene_name' fields on each line of the gtf file. In each example that I have seen, these pieces of information have been the first and sixth entries in quotation marks, respectively, on each line that describes an exon. So, we can use a utility such as awk and tell it to treat quotation marks as column delimiters and then extract the information in the second and twelfth columns and print them to a file.
+First, we need to extract only the lines of the gtf file that are describing exons (lines that describe other features such as entire genes or specific transcripts have different patterns):
+grep "exon" Homo_sapiens.GRCh38.79.gtf > allExons.gtf
+Next, we pull out the two pieces of information we want from each line
+awk -F '"' -v OFS='\t' '{print $2,$12}' allExons.gtf > allGeneIDsToGeneNames.txt
+Then, we remove the duplicate entries from this list (because we have an entry for every exon, but we only need one for each gene):
+sort -u allGeneIDsToNames.txt > GeneIDtoNameConversionTable.txt
+
+
+Congratulations! You are done running jobs on Pegasus! Use your FTP program (FileZilla, most likely) and download these gene count files (and the GeneIDtoNameConverstionTable.txt file, if applicable) to your personal computer. 
 
 To continue following this tutorial, head to the folder titled 'Differential-Expression-Analysis'. 
