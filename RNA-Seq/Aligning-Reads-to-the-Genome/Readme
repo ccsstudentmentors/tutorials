@@ -4,5 +4,4 @@ Lots of different next-generation sequencing applications require aligning the p
 
 There are numerous splice-aware aligners available for use. The two most common are Tophat2 and STAR. Both are installed on Pegasus (and can be loaded as modules) if you wish to use them. As far as I know, Tophat2 is still the more commonly used tool, but STAR is quickly gaining popularity because it is much faster while being just as accurate. There are plenty of papers comparing the two, but one that I think does a particularly excellent job (and also compares many other RNA-Seq related tools) is: http://www.ncbi.nlm.nih.gov/pubmed/25271838 
 
-Whichever tool you choose to use is up to you. The paper above can help you make an informed decision. I hope to eventually post a tutorial on using STAR, but for now I only have a tutorial on using Tophat2.
-
+Whichever tool you choose to use is up to you. The paper above can help you make an informed decision. In this section, you will find tutorials on how to install and use both Tophat and STAR. 
