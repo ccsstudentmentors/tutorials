@@ -65,7 +65,7 @@ deletions.bed
 The 'accepted_hits.bam' file will be our input for our future work. It is an aligned read file, which basically has all of the information found in the fastq file plus where each read aligned in the genome.
 It is compressed in binary format though, so if you want to view it you will need to use the 'samtools view' command.
 To do that, you will need to load samtools:
-module load samtools
+module load samtools/0.1.19
 And then run the command:
 samtools view accepted_hits.bam | head -100
 The [pipe] head -100 is not necessary, but otherwise the command will spit out tens of millions of lines of information to your screen. And nobody really wants that. This addition only shows the first 100 lines of the file.
