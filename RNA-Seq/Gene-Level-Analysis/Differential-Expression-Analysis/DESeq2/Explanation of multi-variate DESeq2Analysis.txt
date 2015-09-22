@@ -1,0 +1,48 @@
+Line #1 loads DESeq2 into memory. After DESeq2 has been installed (which we did in the 'preparing to run DESeq2' file), we need to load it each time we start R.
+Line #2 creates a variable called 'directory' that we will use several times in this script. The directory specified here should be the one that contains the readCount files
+Line#3 moves us to that directory specified in line 2
+
+Lines 6-10 load in the data from the files produced by HTSeq-count and put it into a format understandable by DESeq2. 
+We are 1) loading the counts for each gene for each sample into memory, 2) naming the samples, 3) dividing the samples into the appropriate groups, and 4) putting all of this info into an object made specifically for DESeq2 to work with.
+For this example, I will assume that you followed my directions when running HTSeq-count and used the gene_id as the grouping identifier for exons to form genes rather than gene_name. I will also assume that you followed the naming scheme I proposed (and that this experiment involves two treatments, A and B, and a control group) so that your files are named like this: Control1.geneIDCounts.txt, Control2.geneIDCounts.txt, Control3.geneIDCounts.txt, TreatmentA1.geneIDCounts.txt, TreatmentA2.geneIDCounts.txt, TreatmentA3.geneIDCounts.txt, TreatmentB1.geneIDCounts.txt, TreatmentB2.geneIDCounts.txt, and TreatmentB3.geneIDCounts.txt.
+
+Line #6 creates a list of the relevant files, based on the fact that all of the files have the phrase '.geneIDCounts.txt' in their name.
+Line #7 extracts a list of the sample names from the file names. This takes advantage of the fact that if you remove the string '.geneIDCounts.txt' from the file names, you are left with sample names like 'Control1', 'TreatmentA1', etc
+Line #8 creates a list of the sample conditions based on the name of the sample. It basically just removes the number at the end of the sample name -- so now we have three sample groups: Control, TreatmentA, and TreatmentB.
+Line #9 rolls the lists created in Lines 6-8 into a table. The first column of the table is the list of sample names, where there is one row for each sample (nine rows in the example I am using). The second column is the list of the files. The third column is the list of the sample conditions (e.g., 'Control', 'TreatmentA', or 'TreatmentB'). 
+After executing Line 9, you can view the table to make sure it looks right by using this command:
+View(sampleTable)
+Note that the 'v' in 'View' is capitalized. 
+Line #10 does all of the heavy lifting of actually reading the data from these nine files into memory and constructing the data object that we will be working with from here on out.
+
+Lines 13-15 perform the differential expression testing
+Line #13 takes the 'ddsHTSeq' object created in line 10 and performs the actual differential expression testing on its data. It returns the object 'dds'
+
+Line #14 pulls the results from the differential expression testing into a table of results. Since we have more than two sample groups in this data set, we have to specify a 'contrast' to state which sample groups we are comparing in this instance and which one of those sample groups will be treated as the control group. 
+An example seems like it would be helpful here. Imagine that you have a gene whose expression is twice as high after treatment A than in the control condition. We would want the result of the comparison of this expression to be a Log(2) Fold Change of 1, not -1. By forming the contrast in line 14 as "'TreatmentA','Control'", we set Control as the control group and thereby ensure that our data comes out in this way which makes intuitive sense when we interpret our results later. 
+Line #15 does the same thing as line 14, but for the comparison of TreatmentB to Control. You can extend this same logic to your own data for as many different comparisons of experimental and control groups that you have. 
+
+This results table now tells us the log fold change and false discovery rate adjusted p-value (among other, less important things) of this Experimental vs Control comparison for each gene. 
+But, we are lazy and don't want to look at all of these genes all the time. Often, we just want to see the ones that are 'significant' in their differential expression. Lines 18-22 allow us to decide on our threshold for significance in our differential expression testing and then pull out only the genes that pass that filter. 
+
+Line #18 simply sorts the whole list of genes (produced by the TreatmentA vs Control comparison) by the value of their false discovery rate adjusted p-value (lowest values first) -- this isn't necessary and can be omitted if you don't want your results ordered this way.
+Line #19 filters the results down to only those that have a FDR-adjusted p-value of less than 0.05 (which is what I chose as the threshold for significance for this dataset). You can choose whatever value you want here -- you will just have to justify it one day when you present your results or publish them! The most common values here are 0.05 and 0.1. People typically don't use really stringent p-values to shrink their lists of differentially expressed genes beyond this point. Instead, they apply additional filters on the log fold change. But I digress...
+Line #20 is the same as line 18, but for the comparison of TreatmentB vs Control
+Line #21 is the same as line 19, but for the comparison of TreatmentB vs Control
+
+Now that you have the subset of your data that have FDR-adjusted p-values of less than 0.05, we can go ahead and print them to a file. But wait! We are using uselessly enigmatic Ensembl Gene IDs! So, before we print this data out, lets add in the gene name data for each of the Gene IDs. Lines 24-29 perform the name conversion and add in that information. 
+
+Line #24 loads the conversion table file we made earlier into memory. This file has two columns -- the first is the Gene ID, the second is the corresponding gene name (the official gene symbol)
+Line #25 renames the column of data related to the gene names (so that it will be labeled as gene names when it is eventually printed out to file).
+Line #26 merges this conversion table with our results table from the TreatmentA vs Control comparison using the gene IDs as the matching key. Because of the order in which we entered these two tables to the 'merge' command, we will get the Gene IDs put as the second column of the now nine column results files.
+Line #27 does the same thing as line 26, but only for the significantly differentially expressed genes. 
+Line #28 does the same thing as line 26, but for the TreatmentB vs Control comparison
+Line #29 does the same thing as line 27, but for the TreatmentB vs Control comparison
+
+Now, lets print these results to files
+Line #31 moves us to the directory called 'DESeq2Output'
+Line #32 prints a tab separated text file in that directory containing the information produced by DESeq2 about the TreatmentA vs Control comparison for every gene 
+Line #33 does the same thing as line 32, but for the TreatmentB vs Control comparison
+Line #34 moves us to the directory called 'DESeq2DEGenes' 
+Line #35 prints a text file similar to the one made in line 23, except that it is filtered to only include the genes that passed our p-value cutoff for the TreatmentA vs Control comparison that we applied in Line 19.
+Line #36 does the same thing as line 35, but for the TreatmentB vs Control comparison. 
