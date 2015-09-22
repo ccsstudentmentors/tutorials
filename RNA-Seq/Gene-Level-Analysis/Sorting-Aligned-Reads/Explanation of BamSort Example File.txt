@@ -1,0 +1,18 @@
+The first seven lines of the 'BamSort_Example.job' file are essentially the same as they were in the 'Tophat_Example.job' file. 
+The naming of the job and its standard output and error files has just been updated to reflect this new task. 
+
+Lines 9-11 show examples of running the samtools sort command on the outputs of tophat alignment for three samples.
+In each case, we call the executable file 'samtools' first. The computer knows where this file is because we loaded the samtools module earlier (see the readme file). 
+Within the samtools file, there are numerous tools that can be run, so the next thing we do on each line is to specify that we want to use the 'sort' tool.
+By default, the 'sort' tool sorts the reads based on their position on chromosomes. But we want to sort the reads based on their names (so read pairs show up together). To do that, we enter the '-n' parameter. 
+After that, we tell the program where our input bam file is.
+Finally, we tell it where we want our output sorted bam file to be and what we want it to be named. 
+Note that samtools will append a '.bam' to whatever you write as the output name, so there is no point in adding it here in the job file. 
+So, the name of the output file in line #9 of the example will really be 'Sample1_accepted_hits.nameSorted.bam' and it will be in the Sample1 folder. 
+
+A few notes about running this job file:
+I wrote this file with the expectation that it would be run (submitted to the cluster) from the main project folder (~/RNASeq/thisProject/). You do not have to do it this way -- just adjust the input and output file locations accordingly (or use absolute path names each time such as ~/RNASeq/thisProject/Sample1/accepted_hits.bam).
+I wrote this file to sort the bam files from each sample one after another. You could also make the sorting of each bam file its own job file to cut down on run time. 
+
+Once again, submit this job to the cluster with the following command
+bsub < BamSort_Example.job
