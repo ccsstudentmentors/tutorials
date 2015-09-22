@@ -60,11 +60,17 @@ Genome annotation:
 Human: ftp://ftp.ensembl.org/pub/release-80/gtf/homo_sapiens/Homo_sapiens.GRCh38.80.gtf.gz
 Mouse: ftp://ftp.ensembl.org/pub/release-80/gtf/mus_musculus/Mus_musculus.GRCm38.80.gtf.gz
 Find other species here: ftp://ftp.ensembl.org/pub/release-80/gtf/
-  Place and unzip this annotation file in the same folder as the genome sequence
+Place and unzip this annotation file in the same folder as the genome sequence 
+I would also recommend renaming the annotation file the same way we renamed the genome squence file (just for ease of use):
+mv Homo_sapiens.GRCh38.80.gtf.gz GRCh38.gtf 
 
 Now we are ready to actually run Tophat!
 
-# Running Tophat
-I have provided several example job files for submitting a Tophat job (for a human sample). I think seeing these examples does the best job of explaining how the different pieces of the command work together.
-Here is a quick description of the command parameters that I will be using (feel free to read through the official explanations of all the paramters here: http://ccb.jhu.edu/software/tophat/manual.shtml):
+# Head over to the example job file
+I have provided an example job file for submitting a Tophat job (for a human sample). 
+The job contains four different examples for running Tophat based on common configurations of Fastq files. 
+
+I think seeing these examples does the best job of explaining how the different pieces of the command work together.
+
+See the file explanation of Tophat example job file.txt for a line-by-line explanation of the commands and parameters used in that file.
 
