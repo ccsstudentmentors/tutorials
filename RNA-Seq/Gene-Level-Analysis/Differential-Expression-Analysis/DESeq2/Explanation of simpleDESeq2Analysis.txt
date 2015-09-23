@@ -17,7 +17,7 @@ Line #10 does all of the heavy lifting of actually reading the data from these s
 
 Lines 13-15 perform the differential expression testing
 Line #13 takes the 'ddsHTSeq' object created in line 10 and performs the actual differential expression testing on its data. It returns the object 'dds'
-Line #14 ensures that the differential expression testing was done with the 'control' condition being treated as the control group, if it wasn't done that way then this line will switch the sign on outputs like fold change from negative to positive or vice versa. 
+Line #14 ensures that the results of the differential expression testing will be reported with the 'control' condition being treated as the control group. 
 An example seems like it would be helpful here. Imagine that you have a gene whose expression is twice as high in the experimental condition than in the control condition. We would want the result of the comparison of this expression to be a Log(2) Fold Change of 1, not -1. By asserting here in Line 14 that the condition called 'Control' is the control group, we ensure that our data comes out in this way which makes intuitive sense when we interpret our results later. 
 Line #15 just pulls the results from the differential testing into a table of results (specifically, R calls this kind of table a data frame)
 
