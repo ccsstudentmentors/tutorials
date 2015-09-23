@@ -6,59 +6,59 @@ There are two parts to this scheme -- one on Pegasus, and one on your workstatio
 ### Pegasus Folder scheme (for gene-level analysis):
 Note: the tilde (~) symbol stands for HOME on unix systems. It basically is the location '/nethome/yourUserName'
 ~/RNASeq/
-		GRCh38/
-		GRCm38/
-		thisProject/
-				FastQFiles/
-				Control1/
-				Control2/
-				Control3/
-				Experimental1/
-				Experimental2/
-				Experimental3/
-				ReadCounts/
+	GRCh38/
+	GRCm38/
+	thisProject/
+			FastQFiles/
+			Control1/
+			Control2/
+			Control3/
+			Experimental1/
+			Experimental2/
+			Experimental3/
+			ReadCounts/
 
 ### Personal Workstation Folder scheme (for gene-level analysis):
 C:\RNASeq\
-		ReadCounts\
-		DESeq2Output\
-		DESeq2DEGenes\
-		EdgeROutput\
-		EdgeRDEGenes\
+	ReadCounts\
+	DESeq2Output\
+	DESeq2DEGenes\
+	EdgeROutput\
+	EdgeRDEGenes\
 
 # Isoform Level Analysis Scheme
 ### Pegasus Folder scheme (for isoform-level analysis):
 ~/RNASeq/
-		GRCh38/
-		GRCm38/
-		thisProject/
-				FastQFiles/
-				cuffcompare/
-				cuffdiff/
-				cuffnorm/
-				Control1/
-					cufflinks/
-					cuffquant/
-				Control2/
-					cufflinks/
-					cuffquant/
-				Control3/
-					cufflinks/
-					cuffquant/
-				Experimental1/
-					cufflinks/
-					cuffquant/
-				Experimental2/
-					cufflinks/
-					cuffquant/
-				Experimental3/
-					cufflinks/
-					cuffquant/
-	
+	GRCh38/
+	GRCm38/
+	thisProject/
+			FastQFiles/
+			cuffcompare/
+			cuffdiff/
+			cuffnorm/
+			Control1/
+				cufflinks/
+				cuffquant/
+			Control2/
+				cufflinks/
+				cuffquant/
+			Control3/
+				cufflinks/
+				cuffquant/
+			Experimental1/
+				cufflinks/
+				cuffquant/
+			Experimental2/
+				cufflinks/
+				cuffquant/
+			Experimental3/
+				cufflinks/
+				cuffquant/
+
 ### Personal Workstation Folder scheme (for isoform-level analysis):
 C:\RNASeq\
-		cuffdiff\
-		cuffnorm\
-		processedCufflinksOutput\
-		CufflinksDEIsoforms\
+	cuffdiff\
+	cuffnorm\
+	processedCufflinksOutput\
+	CufflinksDEIsoforms\
 
