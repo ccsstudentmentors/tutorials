@@ -48,6 +48,6 @@ Line #45 merges this conversion table with our results table using the gene IDs 
 Line #46 does the same thing as line 45 but only for the significantly differentially expressed genes. 
 
 Line #49 moves us to the directory called 'EdgeROutput'
-Line #50 prints a tab separated text file in that directory containing the information produced by DESeq2 about this comparison for every gene 
+Line #50 prints a tab separated text file in that directory containing the information produced by EdgeR about this comparison for every gene 
 Line #51 moves us to the directory called 'EdgeRDEGenes' 
 Line #52 prints a text file similar to the one made in line 49, except that it is filtered to only include the genes that passed our p-value cutoff that we applied in line 40.
