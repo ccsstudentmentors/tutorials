@@ -9,14 +9,14 @@ Note: the tilde (~) symbol stands for HOME on unix systems. It basically is the 
 	GRCh38/
 	GRCm38/
 	thisProject/
-			FastQFiles/
-			Control1/
-			Control2/
-			Control3/
-			Experimental1/
-			Experimental2/
-			Experimental3/
-			ReadCounts/
+		FastQFiles/
+		Control1/
+		Control2/
+		Control3/
+		Experimental1/
+		Experimental2/
+		Experimental3/
+		ReadCounts/
 
 ### Personal Workstation Folder scheme (for gene-level analysis):
 C:\RNASeq\
@@ -32,28 +32,28 @@ C:\RNASeq\
 	GRCh38/
 	GRCm38/
 	thisProject/
-			FastQFiles/
-			cuffcompare/
-			cuffdiff/
-			cuffnorm/
-			Control1/
-				cufflinks/
-				cuffquant/
-			Control2/
-				cufflinks/
-				cuffquant/
-			Control3/
-				cufflinks/
-				cuffquant/
-			Experimental1/
-				cufflinks/
-				cuffquant/
-			Experimental2/
-				cufflinks/
-				cuffquant/
-			Experimental3/
-				cufflinks/
-				cuffquant/
+		FastQFiles/
+		cuffcompare/
+		cuffdiff/
+		cuffnorm/
+		Control1/
+			cufflinks/
+			cuffquant/
+		Control2/
+			cufflinks/
+			cuffquant/
+		Control3/
+			cufflinks/
+			cuffquant/
+		Experimental1/
+			cufflinks/
+			cuffquant/
+		Experimental2/
+			cufflinks/
+			cuffquant/
+		Experimental3/
+			cufflinks/
+			cuffquant/
 
 ### Personal Workstation Folder scheme (for isoform-level analysis):
 C:\RNASeq\
