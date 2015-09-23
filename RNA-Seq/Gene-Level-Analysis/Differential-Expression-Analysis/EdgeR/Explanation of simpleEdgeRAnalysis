@@ -1,0 +1,53 @@
+Line #1 loads EdgeR into memory. After EdgeR has been installed (which we did in the 'preparing to run EdgeR' file), we need to load it each time we start R.
+Line #2 creates a variable called 'directory' that we will use several times in this script. The directory specified here should be the one that contains the readCount files
+Line #3 moves us to that directory specified in line 2
+
+Lines 6-11 load each of the example files into memory as data frames.
+Each of these data frames will have two columns (called V1 and V2, by default) where the first column is the gene name and the second is the count of reads aligned to that gene in this sample. 
+
+Lines 14-20 take this loaded data and roll it together into a data frame.  
+Line #14 takes the second columns (the read counts) of each of the sample data frames and concatenates them together into one big data frame, so each column of this new matrix has the read counts from a single sample. 
+Line #15 labels the rows of that data frame with the correct gene names. 
+Line #16 simply creates a new variable that knows how many rows and columns are in this big matrix.
+Line #17 removes the last five rows from this matrix of gene counts. Why do we want to do that?
+Well, the last five rows contain 'housekeeping' information about the sample such as 'the number of reads that didn't align to a feature', 'the number of reads that aligned to multiple features ambigously', etc. 
+While this kind of peripheral information could theoretically be useful in constructing an accurate model of the data for each sample, EdgeR doesn't use it (neither does any other program that I know of). 
+DESeq2 has functions built specifically for loading data from HTSeq which automatically removes these last five lines from the resulting data object (in case you have used DESeq2 and wondered why this step wasn't necessary there). 
+Line #18 creates a list of the sample group (or condition) to which each sample belongs. It is important to make this list in the same order as the order of the columns in the geneCounts matrix.
+Line #19 creates a list of the sample names. Again, make sure it is in the same order as the columns in geneCounts.
+Line #20 names the columns of the geneCounts matrix according to the names provided in Line 19.
+
+Lines 23-29 construct the generalized linear model that will be used for differential expression testing
+Line #23 puts the data from the geneCounts matrix into a list-based object used for edgeR input
+Line #24 crafts a 'design' matrix that assigns each of our samples to a particular sample group (Experimental or Control, in this case) 
+Line #25 cleans up the naming of the sample groups in the design matrix (just compensating for a quirk in line 24's execution that I haven't figured out how to get around). 
+Lines 26-28 use the design matrix and the list-based geneCounts object to estimate the dispersion of the samples
+Read through the edgeR users manual if you want a thorough explanation of what is happening in those three lines (http://bioconductor.org/packages/release/bioc/vignettes/edgeR/inst/doc/edgeRUsersGuide.pdf). 
+For everyone else, just know that we are trying to compensate for the factors that decrease the fit of the data to the generalized linear model. 
+Line #29 uses the calculated dispersion estimates to fit our data to a negative binomial generalized linear model
+
+Line #32 lets us tell edgeR what comparison(s) we want to perform. In this case, it is just the standard Experimental vs Control. We write 'Experimental-Control' so that genes whose expression is higher in the Experimental group than in the Control group will have a positive value for their log fold change. 
+
+Line #35 does the actual work of testing for differential expression by using a generalized linear model likelihood ratio test (lrt)
+Line #36 puts the results of that LRT into a tabular format as a data frame
+
+This results table now tells us the log fold change and false discovery rate adjusted p-value (among other, less important things) of this Experimental vs Control comparison for each gene. 
+But, we are lazy and don't want to look at all of these genes all the time. Often, we just want to see the ones that are 'significant' in their differential expression. Lines 39 and 40 allow us to decide on our threshold for significance in our differential expression testing and then pull out only the genes that pass that filter. 
+
+Line #39 simply sorts the whole list of genes by the value of their false discovery rate adjusted p-value (lowest values first) -- this isn't necessary and can be omitted if you don't want your results ordered this way.
+Line #40 filters the results down to only those that have a FDR-adjusted p-value of less than 0.05 (which is what I chose as the threshold for significance for this dataset). You can choose whatever value you want here -- you will just have to justify it one day when you present your results or publish them! The most common values here are 0.05 and 0.1.
+
+Now that you have the subset of your data that have FDR-adjusted p-values of less than 0.05, we can go ahead and print them to a file. 
+
+Optional Step:
+If you are using the uselessly enigmatic Ensembl Gene IDs, before we print this data you should add in the gene name data for each of the Gene IDs. Lines 43-46 perform the name conversion and add in that information. 
+If you used the '-i gene_name' option when running HTSeq-count, then just skip this section and go straight to line 49. 
+Line #43 loads the conversion table file we made earlier into memory. This file has two columns -- the first is the Gene ID, the second is the corresponding gene name (the official gene symbol)
+Line #44 renames the column of data related to the gene names (so that it will be labeled as gene names when it is eventually printed out to file).
+Line #45 merges this conversion table with our results table using the gene IDs as the matching key. Because of the order in which we entered these two tables to the 'merge' command, we will get the Gene IDs put as the second column of the now eight column results files.
+Line #46 does the same thing as line 45 but only for the significantly differentially expressed genes. 
+
+Line #49 moves us to the directory called 'EdgeROutput'
+Line #50 prints a tab separated text file in that directory containing the information produced by DESeq2 about this comparison for every gene 
+Line #51 moves us to the directory called 'EdgeRDEGenes' 
+Line #52 prints a text file similar to the one made in line 49, except that it is filtered to only include the genes that passed our p-value cutoff that we applied in line 40.
