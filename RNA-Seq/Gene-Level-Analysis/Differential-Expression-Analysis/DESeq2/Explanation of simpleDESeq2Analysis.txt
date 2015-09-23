@@ -1,6 +1,6 @@
 Line #1 loads DESeq2 into memory. After DESeq2 has been installed (which we did in the 'preparing to run DESeq2' file), we need to load it each time we start R.
 Line #2 creates a variable called 'directory' that we will use several times in this script. The directory specified here should be the one that contains the readCount files
-Line#3 moves us to that directory specified in line 2
+Line #3 moves us to that directory specified in line 2
 
 Lines 6-10 load in the data from the files produced by HTSeq-count and put it into a format understandable by DESeq2. 
 We are 1) loading the counts for each gene for each sample into memory, 2) naming the samples, 3) dividing the samples into the appropriate groups, and 4) putting all of this info into an object made specifically for DESeq2 to work with.
