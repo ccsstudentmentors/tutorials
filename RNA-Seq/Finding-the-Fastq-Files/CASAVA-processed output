@@ -1,1 +1,20 @@
-stub
+When you plug in the hard drive that contains your RNA-Seq results, you will most likely be greeted with several folders, one of which will have either your or your PI's name.
+When you enter that folder, you will see one or more folders with names like: 150123_SN674_0303_BC5CFWACXX
+These folders each contain the results of an RNA-Seq run from a single machine (on a particular day).
+
+Enter into this folder and then enter the 'Unaligned' folder. 
+Within the 'Unaligned' folder, you should see a folder called 'Project_XX' where the XX is either your or your PI's initials.
+Within that folder should be a folder for each of your samples that were run on this machine. 
+The folder for each sample will have one or more fastq files in it.
+
+There are several things to keep in mind here:
+* There may be more than one fastq file for each sample (we will handle that when we align them to the genome)
+* The fastq files may be zipped up in an archive that ends in .gz or .tar or something like that
+* If you multiplexed your samples and ran all the samples out on all of your lanes and more than one machine was used to handle your project, you may have folders for the same sample in more than one machine (this is less common though -- just let us know if you think this might be true for you). 
+
+Anyway, so the location of your fastq files should be something like this:
+E:\mdanzi\150123_SN674_0303_BC5CFWACXX\Unaligned\Project_MD\Sample_Control1\
+And the names of the fastq files will probably be something like this: 
+Control1_GAGTGG_L002_R1_001.fastq.gz 
+
+Now that you have found your fastq files, head over to the file 'Loading files onto the server' and put them on Pegasus!
