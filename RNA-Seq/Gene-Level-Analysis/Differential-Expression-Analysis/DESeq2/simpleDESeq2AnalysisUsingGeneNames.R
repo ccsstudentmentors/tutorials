@@ -12,21 +12,23 @@ Experimental3 = read.table('Experimental3.geneNameCounts.txt',sep='\t',header=FA
 
 # combine data sets into a matrix
 geneCounts = data.frame(Control1[,2],Control2[,2],Control3[,2],Experimental1[,2],Experimental2[,2],Experimental3[,2])
-row.names(geneCounts)=Control1[,1]
+row.names(geneCounts) = Control1[,1]
+sizeGeneCounts = dim(geneCounts)
+geneCounts = geneCounts[1:(sizeGeneCounts[1]-5),]
 condition = c(rep('Control',3),rep('Experimental',3))
-sampleNames=c('Control1','Control2','Control3','Experimental1','Experimental2','Experimental3')
+sampleNames = c('Control1','Control2','Control3','Experimental1','Experimental2','Experimental3')
 colnames(geneCounts) = sampleNames
-colData= data.frame(condition,row.names=sampleNames)
+colData = data.frame(condition,row.names=sampleNames)
 dds = DESeqDataSetFromMatrix(countData = geneCounts, colData=colData, design = ~ condition)
 
 # Differential expression analysis
-dds <- DESeq(dds)
-dds$condition <- relevel(dds$condition, 'Control')
-res <- results(dds)
+dds = DESeq(dds)
+dds$condition = relevel(dds$condition, 'Control')
+res = results(dds)
 
 # Extract the significantly differentially expressed genes
-resOrdered<- res[order(res$padj),]
-resSig <- subset(resOrdered, padj<0.05)
+resOrdered = res[order(res$padj),]
+resSig = subset(resOrdered, padj<0.05)
 
 # Print results to file
 setwd('C:/RNASeq/DESeq2Output/')
