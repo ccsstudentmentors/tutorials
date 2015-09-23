@@ -6,7 +6,7 @@ If you already know which route you want to take, head to that folder now and co
 
 # Gene Level Analysis:
 Pros:
-  Easier and faster to perform the analysis
+	Easier and faster to perform the analysis
   More straightforward results
   Results more likely to be reproducible/validatable than transcript level results
 Cons:
