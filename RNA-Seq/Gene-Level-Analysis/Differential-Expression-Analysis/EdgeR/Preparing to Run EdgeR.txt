@@ -1,0 +1,19 @@
+Step 1: Download the files produced by HTSeq-count for each of your samples (this was also the last step of the previous instruction file). Put these files in a working directory on your computer that will be convenient to work in. I am just going to call it: C:\RNASeq\ReadCounts\ 
+Go ahead and make additional folders there for our eventual output:
+C:\RNASeq\EdgeROutput\
+C:\RNASeq\EdgeRDEGenes\
+Step 2: Download and install R: https://cran.r-project.org/bin/windows/base/ 
+Step 3: Donwload and install R-Studio: https://www.rstudio.com/products/rstudio/download/ 
+Step 4: Launch R-Studio. Move to your RNA-Seq directory with the following command:
+setwd('C:/RNASeq/')
+Note: no, that isn't a typo, R uses forward slashes to separate folders even in Windows
+Step 5: Install biocLite (the installation/updating software for bioconductor):
+source('http://bioconductor.org/biocLite.R')
+If you are asked to update all, some, or none of the dependent packages, type 'a' and then hit the 'enter' key to update all of them
+Step 6: Install EdgeR
+biocLite('EdgeR')
+If you are asked to update all, some, or none of the dependent packages, type 'a' and then hit the 'enter' key to update all of them
+Step 7: Load EdgeR
+library(EdgeR)
+
+Proceed to the simple EdgeR data analysis script (and its corresponding explanation file). That script covers data analyses where you have three replicates of a control condition and three replicates of an experimental condition. The multi-variate EdgeR analysis script handles more advanced/complicated setups. 
