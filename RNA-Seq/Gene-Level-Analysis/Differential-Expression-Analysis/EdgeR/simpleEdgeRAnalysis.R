@@ -21,8 +21,8 @@ colnames(geneCounts) = sampleNames
 
 # build the generalized linear model that will be used for differential expression testing
 dge <- DGEList(counts=allGeneCounts, group=condition)
-design <- model.matrix(~group+0, data=dge$samples)
-colnames(design) = gsub("group","",colnames(design))
+design <- model.matrix(~condition+0, data=dge$samples)
+colnames(design) = gsub("condition","",colnames(design))
 disp <- estimateGLMCommonDisp(dge, design)
 disp <- estimateGLMTrendedDisp(disp, design)
 disp <- estimateGLMTagwiseDisp(disp, design)
