@@ -18,12 +18,12 @@ geneCounts = data.frame(Control1[,2],Control2[,2],Control3[,2],TreatmentA1[,2],T
 row.names(geneCounts) = Control1[,1]
 sizeGeneCounts = dim(geneCounts)
 geneCounts = geneCounts[1:(sizeGeneCounts[1]-5),]
-condition = c(rep('Control',3),rep('TreatmentA',3),rep('TreatmentB',3)
+condition = c(rep('Control',3),rep('TreatmentA',3),rep('TreatmentB',3))
 sampleNames = c('Control1','Control2','Control3','TreatmentA1','TreatmentA2','TreatmentA3','TreatmentB1','TreatmentB2','TreatmentB3')
 colnames(geneCounts) = sampleNames
 
 # build the generalized linear model that will be used for differential expression testing
-dge <- DGEList(counts=allGeneCounts, group=condition)
+dge <- DGEList(counts=geneCounts, group=condition)
 design <- model.matrix(~condition+0, data=dge$samples)
 colnames(design) = gsub("condition","",colnames(design))
 disp <- estimateGLMCommonDisp(dge, design)
