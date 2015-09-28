@@ -49,7 +49,7 @@ res2Sig = subset(res2Ordered, PValue<0.05)
 
 # Convert Gene IDs to Gene Names (if applicable)
 conversionTable=read.table('C:\RNASeq\GeneIDtoNameConversionTable.txt',sep='\t',header=FALSE,row.names=1)
-colnames(conversionTable) = c('Gene Name')
+colnames(conversionTable) = c('GeneName')
 nameRes1=merge(conversionTable,res1,by.x=0,by.y=0)
 nameRes1Sig=merge(conversionTable,res1Sig,by.x=0,by.y=0)
 nameRes2=merge(conversionTable,res2,by.x=0,by.y=0)
