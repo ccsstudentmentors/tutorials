@@ -20,7 +20,7 @@ resSig <- subset(resOrdered, padj<0.05)
 
 # Convert Gene IDs to Gene Names
 conversionTable=read.table('C:\RNASeq\GeneIDtoNameConversionTable.txt',sep='\t',header=FALSE,row.names=1)
-colnames(conversionTable) = c('Gene Name')
+colnames(conversionTable) = c('GeneName')
 nameRes=merge(conversionTable,as.data.frame(res),by.x=0,by.y=0)
 nameResSig=merge(conversionTable,as.data.frame(resSig),by.x=0,by.y=0)
 
