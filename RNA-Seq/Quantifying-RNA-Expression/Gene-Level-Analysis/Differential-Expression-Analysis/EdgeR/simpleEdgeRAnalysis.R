@@ -20,7 +20,7 @@ sampleNames = c('Control1','Control2','Control3','Experimental1','Experimental2'
 colnames(geneCounts) = sampleNames
 
 # build the generalized linear model that will be used for differential expression testing
-dge <- DGEList(counts=allGeneCounts, group=condition)
+dge <- DGEList(counts=geneCounts, group=condition)
 design <- model.matrix(~condition+0, data=dge$samples)
 colnames(design) = gsub("condition","",colnames(design))
 disp <- estimateGLMCommonDisp(dge, design)
@@ -41,7 +41,7 @@ resSig = subset(resOrdered, PValue<0.05)
 
 # Convert Gene IDs to Gene Names (if applicable)
 conversionTable=read.table('C:\RNASeq\GeneIDtoNameConversionTable.txt',sep='\t',header=FALSE,row.names=1)
-colnames(conversionTable) = c('Gene Name')
+colnames(conversionTable) = c('GeneName')
 nameRes=merge(conversionTable,res,by.x=0,by.y=0)
 nameResSig=merge(conversionTable,resSig,by.x=0,by.y=0)
 
