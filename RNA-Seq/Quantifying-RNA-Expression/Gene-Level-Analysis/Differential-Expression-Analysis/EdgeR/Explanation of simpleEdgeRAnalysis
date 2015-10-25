@@ -12,7 +12,6 @@ Line #16 simply creates a new variable that knows how many rows and columns are 
 Line #17 removes the last five rows from this matrix of gene counts. Why do we want to do that?
 Well, the last five rows contain 'housekeeping' information about the sample such as 'the number of reads that didn't align to a feature', 'the number of reads that aligned to multiple features ambigously', etc. 
 While this kind of peripheral information could theoretically be useful in constructing an accurate model of the data for each sample, EdgeR doesn't use it (neither does any other program that I know of). 
-DESeq2 has functions built specifically for loading data from HTSeq which automatically removes these last five lines from the resulting data object (in case you have used DESeq2 and wondered why this step wasn't necessary there). 
 Line #18 creates a list of the sample group (or condition) to which each sample belongs. It is important to make this list in the same order as the order of the columns in the geneCounts matrix.
 Line #19 creates a list of the sample names. Again, make sure it is in the same order as the columns in geneCounts.
 Line #20 names the columns of the geneCounts matrix according to the names provided in Line 19.
